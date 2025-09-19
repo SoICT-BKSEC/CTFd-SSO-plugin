@@ -77,7 +77,8 @@ def update_challenge_template(app):
 def update_settings_template(app):
     """
     Gets the actual settings template and disabled the
-    name and email fields as treated by our IDP
+    name and email fields as treated by our IDP. If
+    OAUTH_NO_LOCAL_USERS is set, disbale password as well
     """
 
     environment = app.jinja_environment
@@ -91,6 +92,17 @@ def update_settings_template(app):
     if match:
         pos = match.end()
         original = original[:pos] + 'disabled=True, '+ original[pos:]
+
+    if process_boolean_str(get_app_config("OAUTH_NO_LOCAL_USERS")):
+        match = re.search('form.confirm\(', original)
+        if match:
+            pos = match.end()
+            original = original[:pos] + 'disabled=True, '+ original[pos:]
+
+        match = re.search('form.password\(', original)
+        if match:
+            pos = match.end()
+            original = original[:pos] + 'disabled=True, '+ original[pos:]
 
     override_template('settings.html', original)
 
