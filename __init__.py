@@ -27,6 +27,7 @@ def migrate_db():
     existing = {col['name'] for col in inspector.get_columns('oauth_clients')}
     migrations = [
         ('server_metadata_url', 'TEXT'),
+        ('enabled', 'BOOLEAN NOT NULL DEFAULT TRUE'),
     ]
     with db.engine.begin() as conn:
         for col_name, col_type in migrations:
