@@ -483,7 +483,7 @@ def load_bp(oauth):
                 if "color" in data:
                     client.color = data["color"]
                 if "enabled" in data:
-                    client.client_id = data["enabled"]
+                    client.enabled = data["enabled"]
                 if "server_metadata_url" in data:
                     client.server_metadata_url = data["server_metadata_url"]
                     _validate_metadata_url(client.server_metadata_url)
