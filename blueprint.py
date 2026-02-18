@@ -124,8 +124,8 @@ def load_bp(oauth):
                 raise ValueError("SSO logout - missing refresh_token")
             refresh_token = token["refresh_token"]
 
-            if "sso_client_id" not in session:
-                client_id = session("sso_client_id")
+            if "sso_client_id" in session:
+                client_id = session["sso_client_id"]
                 client = OAuthClients.query.filter_by(id=client_id).first()
             else:
                 client = OAuthClients.query.filter_by(id=1).first()
