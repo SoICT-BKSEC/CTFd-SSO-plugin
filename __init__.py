@@ -28,11 +28,10 @@ def migrate_db():
     migrations = [
         ('server_metadata_url', 'TEXT'),
     ]
-    with db.engine.connect() as conn:
+    with db.engine.begin() as conn:
         for col_name, col_type in migrations:
             if col_name not in existing:
                 conn.execute(text(f'ALTER TABLE oauth_clients ADD COLUMN {col_name} {col_type}'))
-        conn.commit()
 
 
 def oauth_clients():
